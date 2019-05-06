@@ -28,87 +28,85 @@ DevOps 사전과제
 소스 git clone
 
 ```
-# git clone https://github.com/kangjd81/mission.git
-# cd mission/devops
+$ git clone https://github.com/kangjd81/mission.git
+$ cd mission/devops
 ```
 
 #### 2. 빌드 
 host장비에 jdk 설치 이후
 
 ```
-# sh devops.sh build 
+$ sh devops.sh build 
 ```
 
-> **참고)**
-> jdk 설치가 되지 않는 환경에서는 build 컨테이너 이용
-> 
->> ``` 
->> # docker-compose up -d --build gradle
->> ```
->
-> 빌드 대기 (1분 정도 소요) 후 파일 확인
->> ```
->> # docker-compose exec gradle ls -al /home/gradle/build/libs/sample-web.jar
->> -rw-r--r--    1 gradle   gradle    18266795 May  6 14:10 /home/gradle/build/libs/sample-web.jar
->> ```
->
-> container->host로 파일 복사
->> ```
->> # mkdir -p ./build/libs
->> # docker ps | grep gradle
->> (containerID 확인)
->> # docker cp {containerID}:/home/gradle/build/libs/sample-web.jar ./build/libs/
->> ```
->
-> build 컨테이너 제거
->> ```
->> # docker-compose down
->> ```
-		
+> #### 참고
+> * jdk 설치가 되지 않는 환경에서는 build 컨테이너 이용
+>	```
+>	$ docker-compose up -d --build gradle
+>	```
+> 	빌드 대기 (1분 정도 소요) 후 파일 확인
+> 	```
+>   $ docker-compose exec gradle ls -al /home/gradle/build/libs/sample-web.jar
+> 	-rw-r--r--    1 gradle   gradle    18266795 May  6 14:10 /home/gradle/build/libs/sample-web.jar
+>   ```
+> 	container->host로 파일 복사
+> 	```
+> 	$ mkdir -p ./build/libs
+> 	$ docker ps | grep gradle
+> 	(containerID 확인)
+> 	$ docker cp {containerID}:/home/gradle/build/libs/sample-web.jar ./build/libs/
+> 	```
+> 	build 컨테이너 제거
+> 	```
+> 	$ docker-compose down
+> 	```
+
+
 
 #### 3. 실행 
+* 서비스 실행 (nginx, app_v1)
+    ```
+    $ sh devops.sh start
+    ```
+    > [서비스 체크](https://github.com/kangjd81/mission/tree/master/devops#4-%EC%84%9C%EB%B9%84%EC%8A%A4-%EC%B2%B4%ED%81%AC)
 
-서비스 실행 (nginx, app_v1)
-```
-# sh devops.sh start
-```
-> [서비스 체크](https://github.com/kangjd81/mission/tree/master/devops#4-%EC%84%9C%EB%B9%84%EC%8A%A4-%EC%B2%B4%ED%81%AC)
 
-서비스 재시작
-```
-# sh devops.sh restart
-```
+* 서비스 재시작
+    ```
+    $ sh devops.sh restart
+    ```
 
-서비스 배포 (app_v2)
-```
-# sh devops.sh deploy
-``` 
-> 배포 이후 스크립트에서 실제 서비스 호출 시 app_v2 응답 확인 후에 app_v1 종료 처리 진행
+* 서비스 배포 (app_v2)
+    ```
+    $ sh devops.sh deploy
+    ```
+    > 배포 이후 스크립트에서 실제 서비스 호출 시 app_v2 응답 확인 후에 app_v1 종료 처리 진행
 
-스케일 인/아웃
-```
-# sh devops.sh scale 3
-```
-> nginx는 디폴트로 Round robin 방식.
 
-서비스 중지
-```
-# sh devops.sh stop
-```
+* 스케일 인/아웃
+    ```
+    $ sh devops.sh scale 3
+    ```
+    > nginx는 디폴트로 Round robin 방식.
 
+
+* 서비스 중지
+    ```
+    $ sh devops.sh stop
+    ```
 
    
 #### 4. 서비스 체크
 ```
-curl -H "Host: app.host" localhost/health   
+$ curl -H "Host: app.host" localhost/health   
 or 
-curl app.127.0.0.1.xip.io/health   
+$ curl app.127.0.0.1.xip.io/health   
 ```
 
 
 #### 5. 로그 확인
 ```
-tail -f build/libs/logs/logfile.log
+$ tail -f build/libs/logs/logfile.log
 ```
 
 
