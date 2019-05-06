@@ -54,7 +54,8 @@ ver_check() {
 
 case "$1" in
 	build)
-		gradle clean bootjar
+		chmod +x gradlew
+		./gradlew clean bootjar
 	;;
 	start)
 		start

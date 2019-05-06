@@ -17,7 +17,7 @@ DevOps 사전과제
 ### 사전 설치 도구
 - docker / docker-compose  
 - git
-- ~~gradle/openjdk~~
+- ~~jdk1.8~~
 
 
 ---
@@ -33,14 +33,14 @@ DevOps 사전과제
 ```
 
 #### 2. 빌드 
-host장비에 gradle/openjdk 설치 시
+host장비에 jdk 설치 이후
 
 ```
 # sh devops.sh build 
 ```
 
 > **참고)**
-> gradle/openjdk 가 설치가 되지 않는 장비에서는 build 컨테이너 이용
+> jdk 설치가 되지 않는 환경에서는 build 컨테이너 이용
 > 
 >> ``` 
 >> # docker-compose up -d --build gradle
