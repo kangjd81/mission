@@ -1,0 +1,4 @@
+FROM gradle:jdk8-alpine
+COPY --chown=gradle:gradle . /home/gradle
+WORKDIR /home/gradle
+CMD ( gradle clean bootjar & ) && while true; do ping 8.8.8.8; sleep 10; done
